@@ -1,0 +1,16 @@
+/.vs
+/ExcelToJsonToClass.csproj
+/ExcelToJsonToClass.Editor.csproj
+/ExcelToJsonToClass.sln
+/Unity.Analytics.DataPrivacy.csproj
+/Unity.CollabProxy.Editor.csproj
+/Unity.PackageManagerUI.Editor.csproj
+/Unity.TextMeshPro.csproj
+/Unity.TextMeshPro.Editor.csproj
+/Library
+/Logs
+/ProjectSettings
+/Assembly-CSharp.csproj
+/Assembly-CSharp-Editor.csproj
+/Assembly-CSharp-firstpass.csproj
+/obj

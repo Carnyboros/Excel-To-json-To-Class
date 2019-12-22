@@ -1,0 +1,15 @@
+How To Use
+
+<주의>
+ xlsx 형식의 엑셀이어야 외국어와 한글의 변환이 된다.
+ xls(2007년 이전 형식) 포맷의 엑셀은 모든 데이터에 영어만 사용가능하다.
+
+<엑셀에서 Json으로 변환>
+1. 유니티 메뉴바에 Tools-> Excel to Json Converter 를 클릭한다.
+2. input,output 경로를 지정하고, convert excel files 버튼 클릭.
+
+<Json에서 c# 클래스로 전환>
+1. Json에 형식에 맞는 c# 클래스를 만든다(대소문자 정확하게)
+2. JsonToClass.Deserialize() 함수를 이용하여 1에서 생성한 클래스를 기반으로 파싱된 정보를 담은 클래스가 생성된다.
+
+2018.12.27 임병수
