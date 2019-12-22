@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using System.Text;
+using System.ComponentModel;
 
 public class Example : MonoBehaviour {
 
@@ -15,26 +16,27 @@ public class Example : MonoBehaviour {
         Dictionary<int, CharacterInfo> charInfosInt = JsonToClass.DeserializeIntKeyDic<CharacterInfo>("Power", text);
         foreach (KeyValuePair<string, CharacterInfo> pair in charInfos)
         {
-            FieldInfo[] fields = pair.Value.GetType().GetFields();
-            string infoStr = "";
-            for (int i = 0; i < fields.Length; i++)
+            string type = "";
+            foreach(PropertyDescriptor descriptor in TypeDescriptor.GetProperties(pair.Value))
             {
-                infoStr += fields[i] + " + ";
+                type += descriptor.Name + ": ";
+                var value = descriptor.GetValue(pair.Value);
+                type += value.ToString() + ", ";
             }
-            Debug.Log("Key: " + pair.Key + " Infos: " + infoStr);
+            Debug.Log("Key: " + pair.Key + " Infos: " + type);
         }
     }
 }
 public class CharacterInfo
 {
-    public string Id;
-    public string Name;
-    public string Race;
-    public int Level;
-    public int Power;
-    public int Agility;
-    public int Charisma;
-    public int Intellect;
-    public string[] PastTimes;
-    public int[] Skills;
+    public string Id { get; private set; }
+    public string Name { get; private set; }
+    public string Race { get; private set; }
+    public int Level { get; private set; }
+    public int Power { get; private set; }
+    public int Agility { get; private set; }
+    public float Charisma { get; private set; }
+    public int Intellect { get; private set; }
+    public string[] PastTimes { get; private set; }
+    public int[] Skills { get; private set; }
 }

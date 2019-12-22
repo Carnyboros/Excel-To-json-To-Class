@@ -324,20 +324,20 @@ public class ExcelToJsonConverter
 			if (columnNameRegex.IsMatch(dataTable.Columns[i].ColumnName))
 			{
 				dataTable.Columns.RemoveAt(i);
-			}
-            if(dataTable.Columns[i].ColumnName.Contains("[]"))
+			}            
+            foreach (DataRow row in dataTable.Rows)
             {
-                dataTable.Columns[i].ColumnName = dataTable.Columns[i].ColumnName.Replace("[]", "");
-                foreach(DataRow row in dataTable.Rows)
+                string data = row[dataTable.Columns[i].ColumnName].ToString();                
+
+                if(data.Contains(","))
                 {
-                    string data = (string)row[dataTable.Columns[i].ColumnName];
                     data = data.Replace(",", "\",\"");
                     data = data.Insert(0, "[\"");
-                    data = data.Insert(data.Length, "\"]");                    
+                    data = data.Insert(data.Length, "\"]");
                     row[dataTable.Columns[i].ColumnName] = data;
                 }                
             }
-		}
+        }
         // Serialze the data table to json string        
         return Newtonsoft.Json.JsonConvert.SerializeObject(dataTable);
 	}
