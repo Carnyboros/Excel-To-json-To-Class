@@ -144,9 +144,7 @@ public class ExcelToJsonConverter
         return true;
 	}
     private string RemoveTrashCharacters(string sheetJson)
-    {
-        //test code.
-        //JsonFX 와 같이 사용하기 위해 불필요한 것들 정리.
+    {        
         sheetJson = sheetJson.Replace("\\", "");
         sheetJson = sheetJson.Replace("\"[", "[");
         sheetJson = sheetJson.Replace("]\"", "]");
@@ -327,11 +325,23 @@ public class ExcelToJsonConverter
 			{
 				dataTable.Columns.RemoveAt(i);
 			}
+            if(dataTable.Columns[i].ColumnName.Contains("[]"))
+            {
+                dataTable.Columns[i].ColumnName = dataTable.Columns[i].ColumnName.Replace("[]", "");
+                foreach(DataRow row in dataTable.Rows)
+                {
+                    string data = (string)row[dataTable.Columns[i].ColumnName];
+                    data = data.Replace(",", "\",\"");
+                    data = data.Insert(0, "[\"");
+                    data = data.Insert(data.Length, "\"]");                    
+                    row[dataTable.Columns[i].ColumnName] = data;
+                }                
+            }
 		}
         // Serialze the data table to json string        
         return Newtonsoft.Json.JsonConvert.SerializeObject(dataTable);
 	}
-
+    
 	/// <summary>
 	/// Writes the specified text to the specified file, overwriting it.
 	/// Creates file if it does not exist.
